@@ -1,4 +1,5 @@
-[Event Tracing](https://docs.microsoft.com/en-us/windows/desktop/etw/about-event-tracing)
+# Fundamentals:
+1. [Event Tracing](https://docs.microsoft.com/en-us/windows/desktop/etw/about-event-tracing)
 
 # Free Tools:
 1. [PerfView](https://github.com/Microsoft/perfview)
