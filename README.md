@@ -9,6 +9,7 @@
 5. [Windows Performance Monitor](https://blogs.technet.microsoft.com/askperf/2014/07/17/windows-performance-monitor-overview/)
 6. [Windows Resource Monitor](https://www.digitalcitizen.life/how-use-resource-monitor-windows-7)
 7. [Windows Performance Toolkit Technical Reference](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference)
+8. [MiniProfiler](https://miniprofiler.com/)
 
 # Commercial Tools:
 1. [dotTrace](https://www.jetbrains.com/profiler/)
