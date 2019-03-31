@@ -13,3 +13,4 @@
 # Commercial Tools:
 1. [dotTrace](https://www.jetbrains.com/profiler/)
 2. [dotMemory](https://www.jetbrains.com/dotmemory/)
+3. [Entity Framework Profiler](https://www.hibernatingrhinos.com/products/efprof)
