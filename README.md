@@ -10,6 +10,7 @@
 6. [Windows Resource Monitor](https://www.digitalcitizen.life/how-use-resource-monitor-windows-7)
 7. [Windows Performance Toolkit Technical Reference](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/windows-performance-toolkit-technical-reference)
 8. [MiniProfiler](https://miniprofiler.com/)
+9. [Glimpse](https://github.com/Glimpse/Glimpse)
 
 # Commercial Tools:
 1. [dotTrace](https://www.jetbrains.com/profiler/)
