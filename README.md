@@ -14,8 +14,14 @@
    + [RAMMap](https://docs.microsoft.com/en-us/sysinternals/downloads/rammap)
 7. [MiniProfiler](https://miniprofiler.com/)
 8. [Glimpse](https://github.com/Glimpse/Glimpse)
+9. CLR Profiler
 
 # Commercial Tools:
+### Memory Profilers:
+1. [.NET Memory Profiler](https://memprofiler.com/)
+2. [ANTS Memory Profiler](https://www.red-gate.com/products/dotnet-development/ants-memory-profiler/)
+3. [NProfiler](https://www.nprofiler.com/)
+4. [dotMemory](https://www.jetbrains.com/dotmemory/)
+### Others:
 1. [dotTrace](https://www.jetbrains.com/profiler/)
-2. [dotMemory](https://www.jetbrains.com/dotmemory/)
-3. [Entity Framework Profiler](https://www.hibernatingrhinos.com/products/efprof)
+2. [Entity Framework Profiler](https://www.hibernatingrhinos.com/products/efprof)
