@@ -24,3 +24,4 @@
 4. [dotTrace](https://www.jetbrains.com/profiler/)
 5. [dotMemory](https://www.jetbrains.com/dotmemory/)
 6. [Entity Framework Profiler](https://www.hibernatingrhinos.com/products/efprof)
+7. [Visual Studio Profiling Tools](https://docs.microsoft.com/en-us/visualstudio/profiling/)
