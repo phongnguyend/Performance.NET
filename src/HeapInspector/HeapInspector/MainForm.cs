@@ -65,11 +65,6 @@ namespace HeapInspector
                             TotalSize = size
                         };
                     }
-
-                    if (type.GetSize(obj) >= 85000)
-                    {
-
-                    }
                 }
 
                 var sortOrder = heapObjectsGrid.SortOrder == SortOrder.Ascending ?
