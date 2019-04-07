@@ -14,7 +14,8 @@
    + [RAMMap](https://docs.microsoft.com/en-us/sysinternals/downloads/rammap)
 7. CLR Profiler
 8. [CodeTrack](http://www.getcodetrack.com/)
-9. Libraries:
+9. [Debug Diagnostic Tool (DebugDiag)](https://www.microsoft.com/en-us/download/details.aspx?id=49924)
+10. Libraries:
    + [MiniProfiler](https://miniprofiler.com/)
    + [Glimpse](https://github.com/Glimpse/Glimpse)
    + [Microsoft.Diagnostics.Runtime (CLRMD)](https://github.com/Microsoft/clrmd)
