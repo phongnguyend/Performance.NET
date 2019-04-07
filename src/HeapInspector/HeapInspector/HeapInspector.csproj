@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{983238E3-5690-453B-90E4-157221557D2E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>HeapInspector</RootNamespace>
+    <AssemblyName>HeapInspector</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Diagnostics.Runtime, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Diagnostics.Runtime.1.0.5\lib\net45\Microsoft.Diagnostics.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\SelectProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\SelectProcess.Designer.cs">
+      <DependentUpon>SelectProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeEntry.cs" />
+    <EmbeddedResource Include="Components\SelectProcess.resx">
+      <DependentUpon>SelectProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\1300258712_domain-names-px-png.png" />
+    <Content Include="Resources\1leftarrow.png" />
+    <Content Include="Resources\1rightarrow.png" />
+    <Content Include="Resources\2dowarrow.png" />
+    <Content Include="Resources\2leftarrow.png" />
+    <Content Include="Resources\2rightarrow.png" />
+    <Content Include="Resources\2rightarrow1.png" />
+    <Content Include="Resources\2uparrow.png" />
+    <Content Include="Resources\7days.png" />
+    <Content Include="Resources\add1-128.png" />
+    <Content Include="Resources\advancedsettings.png" />
+    <Content Include="Resources\agt_announcements.png" />
+    <Content Include="Resources\agt_family.png" />
+    <Content Include="Resources\agt_upgrade_misc.png" />
+    <Content Include="Resources\agt_web.png" />
+    <Content Include="Resources\aim_offline.png" />
+    <Content Include="Resources\aim_online.png" />
+    <Content Include="Resources\ark.png" />
+    <Content Include="Resources\ark2.png" />
+    <Content Include="Resources\blockdevice.png" />
+    <Content Include="Resources\blockdevice1.png" />
+    <Content Include="Resources\blockdevice2.png" />
+    <Content Include="Resources\border_all.png" />
+    <Content Include="Resources\button_cancel.png" />
+    <Content Include="Resources\calc.png" />
+    <Content Include="Resources\calc1.png" />
+    <Content Include="Resources\calc2.png" />
+    <Content Include="Resources\calc3.png" />
+    <Content Include="Resources\calc4.png" />
+    <Content Include="Resources\classtreeicon.png" />
+    <Content Include="Resources\connect_creating.png" />
+    <Content Include="Resources\dayview.png" />
+    <Content Include="Resources\db.png" />
+    <Content Include="Resources\delete_64.png" />
+    <Content Include="Resources\desktop22.png" />
+    <Content Include="Resources\desktop221.png" />
+    <Content Include="Resources\displayconfig.png" />
+    <Content Include="Resources\documentinfo.png" />
+    <Content Include="Resources\easymoblog.png" />
+    <Content Include="Resources\edit.png" />
+    <Content Include="Resources\edit1.png" />
+    <Content Include="Resources\edit2.png" />
+    <Content Include="Resources\edit3.png" />
+    <Content Include="Resources\editdelete.png" />
+    <Content Include="Resources\edit_add.png" />
+    <Content Include="Resources\edit_add1.png" />
+    <Content Include="Resources\edit_add2.png" />
+    <Content Include="Resources\edit_remove.png" />
+    <Content Include="Resources\edit_remove2.png" />
+    <None Include="Resources\email_delete.png" />
+    <None Include="Resources\email_link.png" />
+    <Content Include="Resources\exit.png" />
+    <Content Include="Resources\favorites.png" />
+    <Content Include="Resources\filesave.png" />
+    <Content Include="Resources\filesaveas.png" />
+    <Content Include="Resources\fileshare.png" />
+    <Content Include="Resources\file_doc.png" />
+    <Content Include="Resources\flag.png" />
+    <Content Include="Resources\folder_html.png" />
+    <Content Include="Resources\Globe.png" />
+    <Content Include="Resources\gohome.png" />
+    <Content Include="Resources\gradetreeicon.png" />
+    <Content Include="Resources\help.png" />
+    <Content Include="Resources\kate.png" />
+    <Content Include="Resources\katomic.png" />
+    <Content Include="Resources\Keyboard.png" />
+    <Content Include="Resources\kmail.png" />
+    <Content Include="Resources\kmail1.png" />
+    <Content Include="Resources\kodo.png" />
+    <Content Include="Resources\kodo1.png" />
+    <Content Include="Resources\kopeteavailable.png" />
+    <Content Include="Resources\kudesigner.png" />
+    <Content Include="Resources\kuzer.png" />
+    <None Include="Resources\ListMessage.png" />
+    <None Include="Resources\mail_delete.png" />
+    <None Include="Resources\mail_foward.png" />
+    <None Include="Resources\mail_new.png" />
+    <None Include="Resources\mailappt.png" />
+    <Content Include="Resources\mail_send.png" />
+    <None Include="Resources\mail_sending.png" />
+    <None Include="Resources\messagebox_info.png" />
+    <Content Include="Resources\month.png" />
+    <Content Include="Resources\mp3player_alt_unmount1.png" />
+    <Content Include="Resources\open.png" />
+    <Content Include="Resources\package_applications.png" />
+    <Content Include="Resources\package_games_kids.png" />
+    <Content Include="Resources\reload_page.png" />
+    <Content Include="Resources\save_all.png" />
+    <Content Include="Resources\scribus.png" />
+    <Content Include="Resources\search.png" />
+    <Content Include="Resources\search1.png" />
+    <Content Include="Resources\success.png" />
+    <Content Include="Resources\undo.png" />
+    <Content Include="Resources\xfmail.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
