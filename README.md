@@ -12,10 +12,12 @@
 6. [Windows Sysinternals](https://docs.microsoft.com/en-us/sysinternals/)
    + [VMMap](https://docs.microsoft.com/en-us/sysinternals/downloads/vmmap)
    + [RAMMap](https://docs.microsoft.com/en-us/sysinternals/downloads/rammap)
-7. [MiniProfiler](https://miniprofiler.com/)
-8. [Glimpse](https://github.com/Glimpse/Glimpse)
-9. CLR Profiler
-10. [CodeTrack](http://www.getcodetrack.com/)
+7. CLR Profiler
+8. [CodeTrack](http://www.getcodetrack.com/)
+9. Libraries:
+   + [MiniProfiler](https://miniprofiler.com/)
+   + [Glimpse](https://github.com/Glimpse/Glimpse)
+   + [Microsoft.Diagnostics.Runtime (CLRMD)](https://github.com/Microsoft/clrmd)
 
 # Commercial Tools:
 1. [.NET Memory Profiler](https://memprofiler.com/)
