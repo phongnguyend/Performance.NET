@@ -148,5 +148,29 @@ namespace HeapInspector
             }
             InspectProcess(_selectedProcessId);
         }
+
+        private void AutoRefreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            menuItem.Checked = !menuItem.Checked;
+
+            if (menuItem.Checked)
+            {
+                autoRefreshTimer.Start();
+            }
+            else
+            {
+                autoRefreshTimer.Stop();
+            }
+        }
+
+        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            if (_selectedProcessId <= 0)
+            {
+                return;
+            }
+            InspectProcess(_selectedProcessId);
+        }
     }
 }
