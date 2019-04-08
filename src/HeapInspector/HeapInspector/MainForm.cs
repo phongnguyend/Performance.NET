@@ -42,6 +42,7 @@ namespace HeapInspector
                 ClrRuntime runtime = target.ClrVersions.First().CreateRuntime();
 
                 Dictionary<string, TypeEntry> types = new Dictionary<string, TypeEntry>();
+                Dictionary<string, int> stringCount = new Dictionary<string, int>();
                 ClrHeap heap = runtime.Heap;
                 foreach (ulong obj in heap.EnumerateObjects())
                 {
@@ -64,6 +65,20 @@ namespace HeapInspector
                             MaxSize = size,
                             TotalSize = size
                         };
+                    }
+
+                    if(type.IsString)
+                    {
+                        var text = (string)type.GetValue(obj);
+
+                        if (stringCount.ContainsKey(text))
+                        {
+                            stringCount[text]++;
+                        }
+                        else
+                        {
+                            stringCount[text] = 1;
+                        }
                     }
                 }
 
@@ -131,6 +146,38 @@ namespace HeapInspector
                 if (sortCol != null)
                 {
                     heapObjectsGrid.Sort(sortCol, sortOrder);
+                }
+
+                // Strings Grid View:
+                rowcount = 0;
+                stringsGrid.Rows.Clear();
+                foreach (var str in stringCount)
+                {
+                    DataGridViewRow gridrow = new DataGridViewRow();
+                    gridrow.DefaultCellStyle.SelectionBackColor = Color.Black;
+                    if (rowcount % 2 > 0)
+                    {
+                        gridrow.DefaultCellStyle.BackColor = Color.AliceBlue;
+                    }
+                    rowcount++;
+
+                    DataGridViewTextBoxCell name = new DataGridViewTextBoxCell();
+                    name.Value = str.Key;
+                    gridrow.Cells.Add(name);
+
+                    DataGridViewTextBoxCell count = new DataGridViewTextBoxCell();
+                    count.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    count.Style.Format = "n0";
+                    count.Value = str.Value;
+                    gridrow.Cells.Add(count);
+
+                    DataGridViewTextBoxCell length = new DataGridViewTextBoxCell();
+                    length.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    length.Style.Format = "n0";
+                    length.Value = str.Key.Length;
+                    gridrow.Cells.Add(length);
+
+                    stringsGrid.Rows.Add(gridrow);
                 }
             }
         }
