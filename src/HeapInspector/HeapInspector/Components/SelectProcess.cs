@@ -53,12 +53,12 @@ namespace HeapInspector.Components
 
                 DataGridViewTextBoxCell pid = new DataGridViewTextBoxCell();
                 pid.Value = process.Id;
-                pid.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                pid.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
                 gridrow.Cells.Add(pid);
 
                 DataGridViewTextBoxCell platform = new DataGridViewTextBoxCell();
                 platform.Value = GetPlatform(process);
-                platform.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                platform.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
                 gridrow.Cells.Add(platform);
 
                 DataGridViewTextBoxCell description = new DataGridViewTextBoxCell();

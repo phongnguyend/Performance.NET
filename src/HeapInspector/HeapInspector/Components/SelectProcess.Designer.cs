@@ -88,6 +88,7 @@
             this.hdPID.HeaderText = "PID";
             this.hdPID.Name = "hdPID";
             this.hdPID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.hdPID.Width = 80;
             // 
             // Platform
             // 
@@ -98,6 +99,7 @@
             this.Platform.HeaderText = "Platform";
             this.Platform.Name = "Platform";
             this.Platform.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Platform.Width = 80;
             // 
             // Description
             // 
