@@ -42,18 +42,23 @@ namespace HeapInspector
                 ClrRuntime runtime = target.ClrVersions.First().CreateRuntime();
 
                 Dictionary<string, TypeEntry> types = new Dictionary<string, TypeEntry>();
-                Dictionary<string, int> stringCount = new Dictionary<string, int>();
+                Dictionary<string, StringInfor> stringCount = new Dictionary<string, StringInfor>();
                 ClrHeap heap = runtime.Heap;
                 foreach (ulong obj in heap.EnumerateObjects())
                 {
                     ClrType type = heap.GetObjectType(obj);
                     var size = type.GetSize(obj);
+                    var gen = heap.GetGeneration(obj);
+
                     if (types.ContainsKey(type.Name))
                     {
                         types[type.Name].Count++;
                         types[type.Name].MinSize = Math.Min(types[type.Name].MinSize, size);
                         types[type.Name].MaxSize = Math.Max(types[type.Name].MaxSize, size);
                         types[type.Name].TotalSize += size;
+                        types[type.Name].Generation0 += gen == 0 ? 1 : 0;
+                        types[type.Name].Generation1 += gen == 1 ? 1 : 0;
+                        types[type.Name].Generation2 += gen == 2 ? 1 : 0;
                     }
                     else
                     {
@@ -63,21 +68,34 @@ namespace HeapInspector
                             Count = 1,
                             MinSize = size,
                             MaxSize = size,
-                            TotalSize = size
+                            TotalSize = size,
+                            Generation0 = gen == 0 ? 1 : 0,
+                            Generation1 = gen == 1 ? 1 : 0,
+                            Generation2 = gen == 2 ? 1 : 0,
                         };
                     }
 
-                    if(type.IsString)
+                    if (type.IsString)
                     {
                         var text = (string)type.GetValue(obj);
 
                         if (stringCount.ContainsKey(text))
                         {
-                            stringCount[text]++;
+                            stringCount[text].Count++;
+                            stringCount[text].Generation0 += gen == 0 ? 1 : 0;
+                            stringCount[text].Generation1 += gen == 1 ? 1 : 0;
+                            stringCount[text].Generation2 += gen == 2 ? 1 : 0;
                         }
                         else
                         {
-                            stringCount[text] = 1;
+                            stringCount[text] = new StringInfor
+                            {
+                                Text = text,
+                                Count = 1,
+                                Generation0 = gen == 0 ? 1 : 0,
+                                Generation1 = gen == 1 ? 1 : 0,
+                                Generation2 = gen == 2 ? 1 : 0,
+                            };
                         }
                     }
                 }
@@ -137,6 +155,24 @@ namespace HeapInspector
                     totalSize.Value = infor.TotalSize;
                     gridrow.Cells.Add(totalSize);
 
+                    DataGridViewTextBoxCell generation0 = new DataGridViewTextBoxCell();
+                    generation0.Value = infor.Generation0;
+                    generation0.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    generation0.Style.Format = "n0";
+                    gridrow.Cells.Add(generation0);
+
+                    DataGridViewTextBoxCell generation1 = new DataGridViewTextBoxCell();
+                    generation1.Value = infor.Generation1;
+                    generation1.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    generation1.Style.Format = "n0";
+                    gridrow.Cells.Add(generation1);
+
+                    DataGridViewTextBoxCell generation2 = new DataGridViewTextBoxCell();
+                    generation2.Value = infor.Generation2;
+                    generation2.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    generation2.Style.Format = "n0";
+                    gridrow.Cells.Add(generation2);
+
                     heapObjectsGrid.Rows.Add(gridrow);
                 }
 
@@ -165,17 +201,35 @@ namespace HeapInspector
                     name.Value = str.Key;
                     gridrow.Cells.Add(name);
 
-                    DataGridViewTextBoxCell count = new DataGridViewTextBoxCell();
-                    count.Style.Alignment = DataGridViewContentAlignment.BottomRight;
-                    count.Style.Format = "n0";
-                    count.Value = str.Value;
-                    gridrow.Cells.Add(count);
-
                     DataGridViewTextBoxCell length = new DataGridViewTextBoxCell();
                     length.Style.Alignment = DataGridViewContentAlignment.BottomRight;
                     length.Style.Format = "n0";
                     length.Value = str.Key.Length;
                     gridrow.Cells.Add(length);
+
+                    DataGridViewTextBoxCell count = new DataGridViewTextBoxCell();
+                    count.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    count.Style.Format = "n0";
+                    count.Value = str.Value.Count;
+                    gridrow.Cells.Add(count);
+
+                    DataGridViewTextBoxCell generation0 = new DataGridViewTextBoxCell();
+                    generation0.Value = str.Value.Generation0;
+                    generation0.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    generation0.Style.Format = "n0";
+                    gridrow.Cells.Add(generation0);
+
+                    DataGridViewTextBoxCell generation1 = new DataGridViewTextBoxCell();
+                    generation1.Value = str.Value.Generation1;
+                    generation1.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    generation1.Style.Format = "n0";
+                    gridrow.Cells.Add(generation1);
+
+                    DataGridViewTextBoxCell generation2 = new DataGridViewTextBoxCell();
+                    generation2.Value = str.Value.Generation2;
+                    generation2.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    generation2.Style.Format = "n0";
+                    gridrow.Cells.Add(generation2);
 
                     stringsGrid.Rows.Add(gridrow);
                 }
