@@ -4,3 +4,5 @@
 #
 ![alt text](clr2.png)
 #
+# Loading Assemblies
+![alt text](loading_assemblies.png)
