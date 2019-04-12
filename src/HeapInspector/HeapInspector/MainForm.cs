@@ -39,16 +39,23 @@ namespace HeapInspector
         {
             using (DataTarget target = DataTarget.AttachToProcess(pId, 10000))
             {
+                ShowCLRRuntimeInformation(target);
+
                 ClrRuntime runtime = target.ClrVersions.First().CreateRuntime();
 
                 Dictionary<string, TypeEntry> types = new Dictionary<string, TypeEntry>();
                 Dictionary<string, StringInfor> stringCount = new Dictionary<string, StringInfor>();
+
                 ClrHeap heap = runtime.Heap;
+
+                var finalizerQueueObjects = runtime.EnumerateFinalizerQueueObjectAddresses().ToList();
+
                 foreach (ulong obj in heap.EnumerateObjects())
                 {
                     ClrType type = heap.GetObjectType(obj);
                     var size = type.GetSize(obj);
                     var gen = heap.GetGeneration(obj);
+                    var isInFinalizerQueue = finalizerQueueObjects.Contains(obj);
 
                     if (types.ContainsKey(type.Name))
                     {
@@ -59,6 +66,7 @@ namespace HeapInspector
                         types[type.Name].Generation0 += gen == 0 ? 1 : 0;
                         types[type.Name].Generation1 += gen == 1 ? 1 : 0;
                         types[type.Name].Generation2 += gen == 2 ? 1 : 0;
+                        types[type.Name].FinalizerQueueCount += isInFinalizerQueue ? 1 : 0;
                     }
                     else
                     {
@@ -72,6 +80,7 @@ namespace HeapInspector
                             Generation0 = gen == 0 ? 1 : 0,
                             Generation1 = gen == 1 ? 1 : 0,
                             Generation2 = gen == 2 ? 1 : 0,
+                            FinalizerQueueCount = isInFinalizerQueue ? 1 : 0,
                         };
                     }
 
@@ -173,6 +182,12 @@ namespace HeapInspector
                     generation2.Style.Format = "n0";
                     gridrow.Cells.Add(generation2);
 
+                    DataGridViewTextBoxCell finalizerQueue = new DataGridViewTextBoxCell();
+                    finalizerQueue.Value = infor.FinalizerQueueCount;
+                    finalizerQueue.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    finalizerQueue.Style.Format = "n0";
+                    gridrow.Cells.Add(finalizerQueue);
+
                     heapObjectsGrid.Rows.Add(gridrow);
                 }
 
@@ -267,6 +282,45 @@ namespace HeapInspector
                 return;
             }
             InspectProcess(_selectedProcessId);
+        }
+
+        private void ShowCLRRuntimeInformation(DataTarget target)
+        {
+            rtxtCLRInfor.Clear();
+            foreach (var clr in target.ClrVersions)
+            {
+                AppendText($"Version:\t{clr.Version.ToString()}");
+                AppendText($"Module: \t{clr.ModuleInfo.ToString()}");
+            }
+            AppendText("");
+
+            ClrRuntime runtime = target.ClrVersions.First().CreateRuntime();
+
+            AppendText("App Domains:");
+            AppendText("");
+
+            foreach (ClrAppDomain domain in runtime.AppDomains)
+            {
+                AppendText($"  ID:                {domain.Id}");
+                AppendText($"  Name:              {domain.Name}");
+                AppendText($"  Address:           {domain.Address}");
+                AppendText($"  ApplicationBase:   {domain.ApplicationBase}");
+                AppendText($"  ConfigurationFile: {domain.ConfigurationFile}");
+                AppendText("");
+
+                AppendText("    Modules:" + Environment.NewLine);
+                foreach (ClrModule module in domain.Modules)
+                {
+                    AppendText($"       Module:       { module.Name}");
+                    AppendText($"       AssemblyName: { module.AssemblyName}");
+                    AppendText("");
+                }
+            }
+        }
+
+        private void AppendText(string text)
+        {
+            rtxtCLRInfor.AppendText($"{text}{Environment.NewLine}");
         }
     }
 }

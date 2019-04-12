@@ -16,5 +16,6 @@ namespace HeapInspector
         public int Generation0 { get; set; }
         public int Generation1 { get; set; }
         public int Generation2 { get; set; }
+        public int FinalizerQueueCount { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace HeapInspector.Components
         private void SelectProcess_Load(object sender, EventArgs e)
         {
             var processes = Process.GetProcesses().OrderBy(x => x.ProcessName);
-
+            processes = Process.GetProcessesByName("HeapInspector.SampleApp").OrderBy(x => x.ProcessName);
             int rowcount = 0;
             foreach (var process in processes)
             {

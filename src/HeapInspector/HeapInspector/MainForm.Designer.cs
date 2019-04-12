@@ -47,6 +47,8 @@
             this.clGeneration0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clGeneration1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clGeneration2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabCLRRuntime = new System.Windows.Forms.TabPage();
+            this.rtxtCLRInfor = new System.Windows.Forms.RichTextBox();
             this.TypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MinSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,12 +57,14 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.heapObjectsGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabTypes.SuspendLayout();
             this.tabString.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stringsGrid)).BeginInit();
+            this.tabCLRRuntime.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -70,7 +74,7 @@
             this.actionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(899, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1058, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -123,13 +127,14 @@
             this.Total,
             this.Column1,
             this.Column2,
-            this.Column3});
+            this.Column3,
+            this.Column4});
             this.heapObjectsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.heapObjectsGrid.Location = new System.Drawing.Point(3, 3);
             this.heapObjectsGrid.Name = "heapObjectsGrid";
             this.heapObjectsGrid.RowHeadersVisible = false;
             this.heapObjectsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.heapObjectsGrid.Size = new System.Drawing.Size(885, 421);
+            this.heapObjectsGrid.Size = new System.Drawing.Size(1044, 421);
             this.heapObjectsGrid.TabIndex = 1;
             // 
             // autoRefreshTimer
@@ -139,13 +144,14 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabCLRRuntime);
             this.tabControl1.Controls.Add(this.tabTypes);
             this.tabControl1.Controls.Add(this.tabString);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(899, 453);
+            this.tabControl1.Size = new System.Drawing.Size(1058, 453);
             this.tabControl1.TabIndex = 2;
             // 
             // tabTypes
@@ -154,7 +160,7 @@
             this.tabTypes.Location = new System.Drawing.Point(4, 22);
             this.tabTypes.Name = "tabTypes";
             this.tabTypes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypes.Size = new System.Drawing.Size(891, 427);
+            this.tabTypes.Size = new System.Drawing.Size(1050, 427);
             this.tabTypes.TabIndex = 0;
             this.tabTypes.Text = "Types";
             this.tabTypes.UseVisualStyleBackColor = true;
@@ -165,7 +171,7 @@
             this.tabString.Location = new System.Drawing.Point(4, 22);
             this.tabString.Name = "tabString";
             this.tabString.Padding = new System.Windows.Forms.Padding(3);
-            this.tabString.Size = new System.Drawing.Size(792, 400);
+            this.tabString.Size = new System.Drawing.Size(891, 427);
             this.tabString.TabIndex = 1;
             this.tabString.Text = "String";
             this.tabString.UseVisualStyleBackColor = true;
@@ -189,7 +195,7 @@
             this.stringsGrid.Name = "stringsGrid";
             this.stringsGrid.RowHeadersVisible = false;
             this.stringsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.stringsGrid.Size = new System.Drawing.Size(786, 394);
+            this.stringsGrid.Size = new System.Drawing.Size(885, 421);
             this.stringsGrid.TabIndex = 2;
             // 
             // clText
@@ -231,6 +237,26 @@
             this.clGeneration2.Name = "clGeneration2";
             this.clGeneration2.Width = 80;
             // 
+            // tabCLRRuntime
+            // 
+            this.tabCLRRuntime.Controls.Add(this.rtxtCLRInfor);
+            this.tabCLRRuntime.Location = new System.Drawing.Point(4, 22);
+            this.tabCLRRuntime.Name = "tabCLRRuntime";
+            this.tabCLRRuntime.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCLRRuntime.Size = new System.Drawing.Size(1050, 427);
+            this.tabCLRRuntime.TabIndex = 2;
+            this.tabCLRRuntime.Text = "CLR Runtime";
+            this.tabCLRRuntime.UseVisualStyleBackColor = true;
+            // 
+            // rtxtCLRInfor
+            // 
+            this.rtxtCLRInfor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtxtCLRInfor.Location = new System.Drawing.Point(3, 3);
+            this.rtxtCLRInfor.Name = "rtxtCLRInfor";
+            this.rtxtCLRInfor.Size = new System.Drawing.Size(1044, 421);
+            this.rtxtCLRInfor.TabIndex = 0;
+            this.rtxtCLRInfor.Text = "";
+            // 
             // TypeName
             // 
             this.TypeName.HeaderText = "Type Name";
@@ -241,6 +267,7 @@
             this.Count.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Count.HeaderText = "Count";
             this.Count.Name = "Count";
+            this.Count.Width = 80;
             // 
             // MinSize
             // 
@@ -284,11 +311,18 @@
             this.Column3.Name = "Column3";
             this.Column3.Width = 80;
             // 
+            // Column4
+            // 
+            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Column4.HeaderText = "Finalizer Queue";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 80;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(899, 477);
+            this.ClientSize = new System.Drawing.Size(1058, 477);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -301,6 +335,7 @@
             this.tabTypes.ResumeLayout(false);
             this.tabString.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.stringsGrid)).EndInit();
+            this.tabCLRRuntime.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,6 +360,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn clGeneration0;
         private System.Windows.Forms.DataGridViewTextBoxColumn clGeneration1;
         private System.Windows.Forms.DataGridViewTextBoxColumn clGeneration2;
+        private System.Windows.Forms.TabPage tabCLRRuntime;
+        private System.Windows.Forms.RichTextBox rtxtCLRInfor;
         private System.Windows.Forms.DataGridViewTextBoxColumn TypeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.DataGridViewTextBoxColumn MinSize;
@@ -333,6 +370,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }
 
