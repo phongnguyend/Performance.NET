@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Clifton.Tools.Interop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,16 @@ using System.Threading.Tasks;
 
 namespace HeapInspector.SampleApp
 {
+    public struct TestStruct
+    {
+        public int a;
+    }
+
+    public struct TestStruct2
+    {
+        public int a;
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -25,9 +36,11 @@ namespace HeapInspector.SampleApp
                 if (true)
                 {
                     var f = new FinalizableClass();
+                    var pinned = new PinnedObject<TestStruct>();
+                    var pinned2 = new PinnedObject<TestStruct2>();
                 }
 
-                Thread.Sleep(500);
+                Thread.Sleep(100);
 
                 count++;
 

@@ -50,12 +50,15 @@ namespace HeapInspector
 
                 var finalizerQueueObjects = runtime.EnumerateFinalizerQueueObjectAddresses().ToList();
 
+                var pinnedObjects = runtime.EnumerateHandles().Where(h => h.IsPinned).Select(h => h.Object);
+
                 foreach (ulong obj in heap.EnumerateObjects())
                 {
                     ClrType type = heap.GetObjectType(obj);
                     var size = type.GetSize(obj);
                     var gen = heap.GetGeneration(obj);
                     var isInFinalizerQueue = finalizerQueueObjects.Contains(obj);
+                    var isPinned = pinnedObjects.Contains(obj);
 
                     if (types.ContainsKey(type.Name))
                     {
@@ -67,6 +70,7 @@ namespace HeapInspector
                         types[type.Name].Generation1 += gen == 1 ? 1 : 0;
                         types[type.Name].Generation2 += gen == 2 ? 1 : 0;
                         types[type.Name].FinalizerQueueCount += isInFinalizerQueue ? 1 : 0;
+                        types[type.Name].PinnedCount += isPinned ? 1 : 0;
                     }
                     else
                     {
@@ -81,6 +85,7 @@ namespace HeapInspector
                             Generation1 = gen == 1 ? 1 : 0,
                             Generation2 = gen == 2 ? 1 : 0,
                             FinalizerQueueCount = isInFinalizerQueue ? 1 : 0,
+                            PinnedCount = isPinned ? 1 : 0,
                         };
                     }
 
@@ -187,6 +192,12 @@ namespace HeapInspector
                     finalizerQueue.Style.Alignment = DataGridViewContentAlignment.BottomRight;
                     finalizerQueue.Style.Format = "n0";
                     gridrow.Cells.Add(finalizerQueue);
+
+                    DataGridViewTextBoxCell pinned = new DataGridViewTextBoxCell();
+                    pinned.Value = infor.PinnedCount;
+                    pinned.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    pinned.Style.Format = "n0";
+                    gridrow.Cells.Add(pinned);
 
                     heapObjectsGrid.Rows.Add(gridrow);
                 }
