@@ -36,6 +36,7 @@ namespace HeapInspector.SampleApp
                 if (true)
                 {
                     var f = new FinalizableClass();
+                    Task.Factory.StartNew(() => f.Run());
                     var pinned = new PinnedObject<TestStruct>();
                     var pinned2 = new PinnedObject<TestStruct2>();
                 }

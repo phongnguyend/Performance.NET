@@ -59,6 +59,7 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.heapObjectsGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -130,7 +131,8 @@
             this.Column2,
             this.Column3,
             this.Column4,
-            this.Column5});
+            this.Column5,
+            this.Column6});
             this.heapObjectsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.heapObjectsGrid.Location = new System.Drawing.Point(3, 3);
             this.heapObjectsGrid.Name = "heapObjectsGrid";
@@ -269,21 +271,19 @@
             this.Count.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Count.HeaderText = "Count";
             this.Count.Name = "Count";
-            this.Count.Width = 80;
+            this.Count.Width = 50;
             // 
             // MinSize
             // 
             this.MinSize.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.MinSize.HeaderText = "Min Size (Bytes)";
+            this.MinSize.HeaderText = "Min (Bytes)";
             this.MinSize.Name = "MinSize";
-            this.MinSize.Width = 150;
             // 
             // MaxSize
             // 
             this.MaxSize.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.MaxSize.HeaderText = "Max Size (Bytes)";
+            this.MaxSize.HeaderText = "Max (Bytes)";
             this.MaxSize.Name = "MaxSize";
-            this.MaxSize.Width = 150;
             // 
             // Total
             // 
@@ -326,6 +326,13 @@
             this.Column5.HeaderText = "Pinned";
             this.Column5.Name = "Column5";
             this.Column5.Width = 50;
+            // 
+            // Column6
+            // 
+            this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Column6.HeaderText = "Blocking";
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 50;
             // 
             // MainForm
             // 
@@ -381,6 +388,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
     }
 }
 

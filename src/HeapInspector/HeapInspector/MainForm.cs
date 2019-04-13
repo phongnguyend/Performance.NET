@@ -49,8 +49,8 @@ namespace HeapInspector
                 ClrHeap heap = runtime.Heap;
 
                 var finalizerQueueObjects = runtime.EnumerateFinalizerQueueObjectAddresses().ToList();
-
                 var pinnedObjects = runtime.EnumerateHandles().Where(h => h.IsPinned).Select(h => h.Object);
+                var blockingObjects = heap.EnumerateBlockingObjects().Select(x => x.Object);
 
                 foreach (ulong obj in heap.EnumerateObjects())
                 {
@@ -59,6 +59,7 @@ namespace HeapInspector
                     var gen = heap.GetGeneration(obj);
                     var isInFinalizerQueue = finalizerQueueObjects.Contains(obj);
                     var isPinned = pinnedObjects.Contains(obj);
+                    var isBlocking = blockingObjects.Contains(obj);
 
                     if (types.ContainsKey(type.Name))
                     {
@@ -71,6 +72,7 @@ namespace HeapInspector
                         types[type.Name].Generation2 += gen == 2 ? 1 : 0;
                         types[type.Name].FinalizerQueueCount += isInFinalizerQueue ? 1 : 0;
                         types[type.Name].PinnedCount += isPinned ? 1 : 0;
+                        types[type.Name].BlockingCount += isBlocking ? 1 : 0;
                     }
                     else
                     {
@@ -86,6 +88,7 @@ namespace HeapInspector
                             Generation2 = gen == 2 ? 1 : 0,
                             FinalizerQueueCount = isInFinalizerQueue ? 1 : 0,
                             PinnedCount = isPinned ? 1 : 0,
+                            BlockingCount = isBlocking ? 1 : 0,
                         };
                     }
 
@@ -198,6 +201,12 @@ namespace HeapInspector
                     pinned.Style.Alignment = DataGridViewContentAlignment.BottomRight;
                     pinned.Style.Format = "n0";
                     gridrow.Cells.Add(pinned);
+
+                    DataGridViewTextBoxCell blocking = new DataGridViewTextBoxCell();
+                    blocking.Value = infor.BlockingCount;
+                    blocking.Style.Alignment = DataGridViewContentAlignment.BottomRight;
+                    blocking.Style.Format = "n0";
+                    gridrow.Cells.Add(blocking);
 
                     heapObjectsGrid.Rows.Add(gridrow);
                 }

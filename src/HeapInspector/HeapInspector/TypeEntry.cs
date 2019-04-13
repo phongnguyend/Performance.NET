@@ -18,5 +18,6 @@ namespace HeapInspector
         public int Generation2 { get; set; }
         public int FinalizerQueueCount { get; set; }
         public int PinnedCount { get; set; }
+        public int BlockingCount { get; set; }
     }
 }
