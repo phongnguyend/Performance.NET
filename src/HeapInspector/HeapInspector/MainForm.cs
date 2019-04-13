@@ -51,9 +51,9 @@ namespace HeapInspector
                 ClrHeap heap = runtime.Heap;
 
                 var finalizerQueueObjects = runtime.EnumerateFinalizerQueueObjectAddresses().ToList();
-                var pinnedObjects = runtime.EnumerateHandles().Where(h => h.IsPinned).Select(h => h.Object);
-                //var blockingObjects = heap.EnumerateBlockingObjects().Select(x => x.Object);
-                var blockingObjects = runtime.Threads.SelectMany(x => x.BlockingObjects).Select(x => x.Object);
+                var pinnedObjects = runtime.EnumerateHandles().Where(h => h.IsPinned).Select(h => h.Object).ToList();
+                var blockingObjects = heap.EnumerateBlockingObjects().Select(x => x.Object).ToList();
+                //var blockingObjects = runtime.Threads.SelectMany(x => x.BlockingObjects).Select(x => x.Object).ToList();
 
                 foreach (ulong obj in heap.EnumerateObjects())
                 {
