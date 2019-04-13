@@ -60,6 +60,13 @@
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabThreads = new System.Windows.Forms.TabPage();
+            this.threadsGrid = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.heapObjectsGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -67,6 +74,8 @@
             this.tabTypes.SuspendLayout();
             this.tabString.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stringsGrid)).BeginInit();
+            this.tabThreads.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadsGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -151,6 +160,7 @@
             this.tabControl1.Controls.Add(this.tabCLRRuntime);
             this.tabControl1.Controls.Add(this.tabTypes);
             this.tabControl1.Controls.Add(this.tabString);
+            this.tabControl1.Controls.Add(this.tabThreads);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
@@ -334,6 +344,73 @@
             this.Column6.Name = "Column6";
             this.Column6.Width = 50;
             // 
+            // tabThreads
+            // 
+            this.tabThreads.Controls.Add(this.threadsGrid);
+            this.tabThreads.Location = new System.Drawing.Point(4, 22);
+            this.tabThreads.Name = "tabThreads";
+            this.tabThreads.Size = new System.Drawing.Size(1050, 427);
+            this.tabThreads.TabIndex = 3;
+            this.tabThreads.Text = "Threads";
+            this.tabThreads.UseVisualStyleBackColor = true;
+            // 
+            // threadsGrid
+            // 
+            this.threadsGrid.AllowUserToAddRows = false;
+            this.threadsGrid.AllowUserToDeleteRows = false;
+            this.threadsGrid.AllowUserToResizeRows = false;
+            this.threadsGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.threadsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.threadsGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn11,
+            this.Column7,
+            this.Column10,
+            this.Column8,
+            this.Column9});
+            this.threadsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.threadsGrid.Location = new System.Drawing.Point(0, 0);
+            this.threadsGrid.Name = "threadsGrid";
+            this.threadsGrid.RowHeadersVisible = false;
+            this.threadsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.threadsGrid.Size = new System.Drawing.Size(1050, 427);
+            this.threadsGrid.TabIndex = 2;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn11.FillWeight = 116.4108F;
+            this.dataGridViewTextBoxColumn11.HeaderText = "OS Thread Id";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            // 
+            // Column7
+            // 
+            this.Column7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Column7.FillWeight = 126.9036F;
+            this.Column7.HeaderText = "Managed Thread Id";
+            this.Column7.Name = "Column7";
+            // 
+            // Column10
+            // 
+            this.Column10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Column10.FillWeight = 85.5619F;
+            this.Column10.HeaderText = "Thread";
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 400;
+            // 
+            // Column8
+            // 
+            this.Column8.FillWeight = 85.5619F;
+            this.Column8.HeaderText = "Call Stack";
+            this.Column8.Name = "Column8";
+            // 
+            // Column9
+            // 
+            this.Column9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Column9.FillWeight = 85.5619F;
+            this.Column9.HeaderText = "Blocking Objects";
+            this.Column9.Name = "Column9";
+            this.Column9.Width = 50;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -352,6 +429,8 @@
             this.tabTypes.ResumeLayout(false);
             this.tabString.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.stringsGrid)).EndInit();
+            this.tabThreads.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.threadsGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -389,6 +468,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.TabPage tabThreads;
+        private System.Windows.Forms.DataGridView threadsGrid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
     }
 }
 

@@ -23,5 +23,13 @@ namespace HeapInspector.SampleApp
             }
         }
 
+        public void Run2()
+        {
+            lock (_lock)
+            {
+                Thread.Sleep(1500);
+            }
+        }
+
     }
 }

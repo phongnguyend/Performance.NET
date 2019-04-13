@@ -43,6 +43,8 @@ namespace HeapInspector
 
                 ClrRuntime runtime = target.ClrVersions.First().CreateRuntime();
 
+                LoadThreads(runtime);
+
                 Dictionary<string, TypeEntry> types = new Dictionary<string, TypeEntry>();
                 Dictionary<string, StringInfor> stringCount = new Dictionary<string, StringInfor>();
 
@@ -50,7 +52,8 @@ namespace HeapInspector
 
                 var finalizerQueueObjects = runtime.EnumerateFinalizerQueueObjectAddresses().ToList();
                 var pinnedObjects = runtime.EnumerateHandles().Where(h => h.IsPinned).Select(h => h.Object);
-                var blockingObjects = heap.EnumerateBlockingObjects().Select(x => x.Object);
+                //var blockingObjects = heap.EnumerateBlockingObjects().Select(x => x.Object);
+                var blockingObjects = runtime.Threads.SelectMany(x => x.BlockingObjects).Select(x => x.Object);
 
                 foreach (ulong obj in heap.EnumerateObjects())
                 {
@@ -123,7 +126,7 @@ namespace HeapInspector
 
                 int rowcount = 0;
                 heapObjectsGrid.Rows.Clear();
-                foreach (var val in types)
+                foreach (var val in types.Where(x => x.Value.Count > 1))
                 {
                     var infor = val.Value;
                     DataGridViewRow gridrow = new DataGridViewRow();
@@ -319,7 +322,10 @@ namespace HeapInspector
             AppendText("App Domains:");
             AppendText("");
 
-            foreach (ClrAppDomain domain in runtime.AppDomains)
+            var domains = new List<ClrAppDomain> { runtime.SystemDomain, runtime.SharedDomain };
+            domains.AddRange(runtime.AppDomains.Select(x => x));
+
+            foreach (var domain in domains)
             {
                 AppendText($"  ID:                {domain.Id}");
                 AppendText($"  Name:              {domain.Name}");
@@ -336,6 +342,80 @@ namespace HeapInspector
                     AppendText("");
                 }
             }
+
+        }
+
+        private void LoadThreads(ClrRuntime runtime)
+        {
+            int rowcount = 0;
+            threadsGrid.Rows.Clear();
+            foreach (var thread in runtime.Threads)
+            {
+                DataGridViewRow gridrow = new DataGridViewRow();
+                gridrow.DefaultCellStyle.SelectionBackColor = Color.Black;
+                if (rowcount % 2 > 0)
+                {
+                    gridrow.DefaultCellStyle.BackColor = Color.AliceBlue;
+                }
+                rowcount++;
+
+                DataGridViewTextBoxCell osThreadId = new DataGridViewTextBoxCell();
+                osThreadId.Value = thread.OSThreadId;
+                osThreadId.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                gridrow.Cells.Add(osThreadId);
+
+                DataGridViewTextBoxCell managedThreadId = new DataGridViewTextBoxCell();
+                managedThreadId.Value = thread.ManagedThreadId;
+                managedThreadId.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                gridrow.Cells.Add(managedThreadId);
+
+                DataGridViewTextBoxCell threadName = new DataGridViewTextBoxCell();
+                threadName.Value = GetThreadName(thread);
+                gridrow.Cells.Add(threadName);
+
+                DataGridViewTextBoxCell callStack = new DataGridViewTextBoxCell();
+                callStack.Value = string.Join(Environment.NewLine, thread.StackTrace.Select(x => x.DisplayString));
+                gridrow.Cells.Add(callStack);
+
+                DataGridViewTextBoxCell blockingObjects = new DataGridViewTextBoxCell();
+                blockingObjects.Value = thread.BlockingObjects.Count;
+                blockingObjects.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                gridrow.Cells.Add(blockingObjects);
+
+                threadsGrid.Rows.Add(gridrow);
+            }
+        }
+
+        private object GetThreadName(ClrThread thread)
+        {
+            var names = new List<string>();
+
+            if (thread.IsGC)
+            {
+                names.Add("GC");
+            }
+            if (thread.IsFinalizer)
+            {
+                names.Add("Finalizer");
+            }
+            if (thread.IsThreadpoolWorker)
+            {
+                names.Add("ThreadpoolWorker");
+            }
+            if (thread.IsMTA)
+            {
+                names.Add("MTA");
+            }
+            if (thread.IsBackground)
+            {
+                names.Add("Background");
+            }
+            if (thread.IsAlive)
+            {
+                names.Add("Alive");
+            }
+
+            return string.Join(" | ", names);
         }
 
         private void AppendText(string text)
