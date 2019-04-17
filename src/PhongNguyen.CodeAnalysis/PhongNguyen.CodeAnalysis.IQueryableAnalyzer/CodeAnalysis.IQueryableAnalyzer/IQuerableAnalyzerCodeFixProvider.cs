@@ -13,7 +13,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Rename;
 using Microsoft.CodeAnalysis.Text;
 
-namespace PhongNguyen.CodeAnalysis.IQuerableAnalyzer
+namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(IQuerableAnalyzerCodeFixProvider)), Shared]
     public class IQuerableAnalyzerCodeFixProvider : Microsoft.CodeAnalysis.CodeFixes.CodeFixProvider

@@ -4,9 +4,9 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using TestHelper;
-using PhongNguyen.CodeAnalysis.IQuerableAnalyzer;
+using PhongNguyen.CodeAnalysis.IQueryableAnalyzer;
 
-namespace PhongNguyen.CodeAnalysis.IQuerableAnalyzer.Test
+namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer.Test
 {
     [TestClass]
     public class UnitTest : CodeFixVerifier

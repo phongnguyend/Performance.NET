@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhongNguyen.CodeAnalysis.IQuerableAnalyzer", "PhongNguyen.CodeAnalysis.IQuerableAnalyzer\PhongNguyen.CodeAnalysis.IQuerableAnalyzer\PhongNguyen.CodeAnalysis.IQuerableAnalyzer.csproj", "{9BFA5DA4-05E8-42BE-8851-80DDE13EBB8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeAnalysis.IQueryableAnalyzer", "PhongNguyen.CodeAnalysis.IQueryableAnalyzer\CodeAnalysis.IQueryableAnalyzer\CodeAnalysis.IQueryableAnalyzer.csproj", "{9BFA5DA4-05E8-42BE-8851-80DDE13EBB8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhongNguyen.CodeAnalysis.IQuerableAnalyzer.Test", "PhongNguyen.CodeAnalysis.IQuerableAnalyzer\PhongNguyen.CodeAnalysis.IQuerableAnalyzer.Test\PhongNguyen.CodeAnalysis.IQuerableAnalyzer.Test.csproj", "{F2B7C356-7B67-465C-AD06-39CF24A654CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeAnalysis.IQueryableAnalyzer.Test", "PhongNguyen.CodeAnalysis.IQueryableAnalyzer\CodeAnalysis.IQueryableAnalyzer.Test\CodeAnalysis.IQueryableAnalyzer.Test.csproj", "{F2B7C356-7B67-465C-AD06-39CF24A654CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhongNguyen.CodeAnalysis.IQuerableAnalyzer.Vsix", "PhongNguyen.CodeAnalysis.IQuerableAnalyzer\PhongNguyen.CodeAnalysis.IQuerableAnalyzer.Vsix\PhongNguyen.CodeAnalysis.IQuerableAnalyzer.Vsix.csproj", "{D55BD676-4A98-43F7-BB2E-FEE2AB85F528}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAnalysis.IQueryableAnalyzer.Vsix", "PhongNguyen.CodeAnalysis.IQueryableAnalyzer\CodeAnalysis.IQueryableAnalyzer.Vsix\CodeAnalysis.IQueryableAnalyzer.Vsix.csproj", "{D55BD676-4A98-43F7-BB2E-FEE2AB85F528}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

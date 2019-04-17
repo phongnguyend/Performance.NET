@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace PhongNguyen.CodeAnalysis.IQuerableAnalyzer
+namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class IQuerableAnalyzer : DiagnosticAnalyzer
@@ -84,7 +84,7 @@ namespace PhongNguyen.CodeAnalysis.IQuerableAnalyzer
                 }
             }
 
-            if ((receiverType == "IQueryable" || returnType == "IQueryable"))
+            if (receiverType == "IQueryable" || returnType == "IQueryable" || receiverType == "IOrderedQueryable" || returnType == "IOrderedQueryable")
             {
                 var diagnostic = Diagnostic.Create(Rules[DiagnosticIdIQ001], foundNode.GetLocation(), foundNode.ToString());
 
@@ -139,8 +139,9 @@ namespace PhongNguyen.CodeAnalysis.IQuerableAnalyzer
                     var inv = child as InvocationExpressionSyntax;
                     var si = context.SemanticModel.GetSymbolInfo(inv).Symbol as IMethodSymbol;
                     var type = si?.ReceiverType?.Name;
+                    var returnType = si?.ReturnType?.Name;
 
-                    if (type == "IQueryable")
+                    if ((type == "IQueryable" || type == "IOrderedQueryable") && returnType != "IQueryable" && returnType != "IOrderedQueryable")
                     {
                         context.ReportDiagnostic(Diagnostic.Create(Rules[DiagnosticIdIQ002], child.GetLocation(), child.ToString()));
                         return;

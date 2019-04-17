@@ -19,8 +19,8 @@
     <ProjectGuid>{D55BD676-4A98-43F7-BB2E-FEE2AB85F528}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PhongNguyen.CodeAnalysis.IQuerableAnalyzer.Vsix</RootNamespace>
-    <AssemblyName>PhongNguyen.CodeAnalysis.IQuerableAnalyzer</AssemblyName>
+    <RootNamespace>PhongNguyen.CodeAnalysis.IQueryableAnalyzer.Vsix</RootNamespace>
+    <AssemblyName>PhongNguyen.CodeAnalysis.IQueryableAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
@@ -58,9 +58,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PhongNguyen.CodeAnalysis.IQuerableAnalyzer\PhongNguyen.CodeAnalysis.IQuerableAnalyzer.csproj">
+    <ProjectReference Include="..\CodeAnalysis.IQueryableAnalyzer\CodeAnalysis.IQueryableAnalyzer.csproj">
       <Project>{9BFA5DA4-05E8-42BE-8851-80DDE13EBB8C}</Project>
-      <Name>PhongNguyen.CodeAnalysis.IQuerableAnalyzer</Name>
+      <Name>CodeAnalysis.IQueryableAnalyzer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

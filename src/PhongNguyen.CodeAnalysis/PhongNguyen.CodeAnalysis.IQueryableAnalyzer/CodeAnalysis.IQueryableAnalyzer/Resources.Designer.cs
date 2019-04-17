@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PhongNguyen.CodeAnalysis.IQuerableAnalyzer
+namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
 {
     using System;
     using System.Reflection;
