@@ -2,3 +2,6 @@ src/*/*/bin/
 src/*/*/obj/
 src/*/.vs/
 src/*/packages/
+
+src/**/bin/
+src/**/obj/
