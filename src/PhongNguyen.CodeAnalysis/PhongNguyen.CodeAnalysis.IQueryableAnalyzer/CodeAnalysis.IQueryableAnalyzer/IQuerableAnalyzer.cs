@@ -16,6 +16,8 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
         public const string DiagnosticIdIQ001 = "IQ001";
         public const string DiagnosticIdIQ002 = "IQ002";
 
+        public const string DiagnosticIdLC001 = "LC001";
+
         private static Dictionary<string, DiagnosticDescriptor> _rules;
         public static Dictionary<string, DiagnosticDescriptor> Rules
         {
@@ -26,7 +28,8 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
                     _rules = new Dictionary<string, DiagnosticDescriptor>
                 {
                     {DiagnosticIdIQ001, new DiagnosticDescriptor(DiagnosticIdIQ001, "Expression has 'Contains' method", "Using '{0}' might generate Adhoc queries.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Using 'Contains' cause generating Adhoc queries.") },
-                    {DiagnosticIdIQ002, new DiagnosticDescriptor(DiagnosticIdIQ002, "Evaluate IQueryable Inside a Loop", "Using {0} inside a loop might generate multiple queries to database.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Evaluate IQueryable Inside a Loop might generate multiple queries to database.") }
+                    {DiagnosticIdIQ002, new DiagnosticDescriptor(DiagnosticIdIQ002, "Evaluate IQueryable Inside a Loop", "Using {0} inside a loop might generate multiple queries to database.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Evaluate IQueryable Inside a Loop might generate multiple queries to database.") },
+                    {DiagnosticIdLC001, new DiagnosticDescriptor(DiagnosticIdLC001, "Unused Local Variable.", "{0} is unused.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Unused Local Variable.") }
                 };
                 }
                 return _rules;
@@ -39,6 +42,7 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
         {
             context.RegisterSyntaxNodeAction(AnalyzeLinqExpression, SyntaxKind.SimpleLambdaExpression, SyntaxKind.ParenthesizedLambdaExpression/*, SyntaxKind.QueryExpression*/);
             context.RegisterSyntaxNodeAction(AnalizeLoop, SyntaxKind.WhileStatement, SyntaxKind.ForStatement, SyntaxKind.ForEachStatement);
+            context.RegisterSyntaxNodeAction(AnalizeLocalVariables, SyntaxKind.MethodDeclaration);
         }
 
         private void AnalyzeLinqExpression(SyntaxNodeAnalysisContext context)
@@ -150,5 +154,28 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
                 TraverseChilds(context, child);
             }
         }
+
+        private void AnalizeLocalVariables(SyntaxNodeAnalysisContext context)
+        {
+            var node = context.Node as MethodDeclarationSyntax;
+
+            if (node == null || node.Body == null)
+            {
+                return;
+            }
+
+            var test = context.SemanticModel.AnalyzeDataFlow(node.Body);
+
+            var unused = test.VariablesDeclared.Except(test.ReadInside);
+            foreach (var symbol in unused)
+            {
+                if (symbol is ILocalSymbol)
+                {
+                    var local = symbol as ILocalSymbol;
+                    context.ReportDiagnostic(Diagnostic.Create(Rules[DiagnosticIdLC001], local.Locations[0], local.ToString()));
+                }
+            }
+        }
+
     }
 }
