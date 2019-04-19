@@ -17,6 +17,8 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
         public const string DiagnosticIdIQ002 = "IQ002";
 
         public const string DiagnosticIdLC001 = "LC001";
+        public const string DiagnosticIdMT001 = "MT001";
+        public const string DiagnosticIdMT002 = "MT002";
 
         private static Dictionary<string, DiagnosticDescriptor> _rules;
         public static Dictionary<string, DiagnosticDescriptor> Rules
@@ -29,7 +31,9 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
                 {
                     {DiagnosticIdIQ001, new DiagnosticDescriptor(DiagnosticIdIQ001, "Expression has 'Contains' method", "Using '{0}' might generate Adhoc queries.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Using 'Contains' cause generating Adhoc queries.") },
                     {DiagnosticIdIQ002, new DiagnosticDescriptor(DiagnosticIdIQ002, "Evaluate IQueryable Inside a Loop", "Using {0} inside a loop might generate multiple queries to database.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Evaluate IQueryable Inside a Loop might generate multiple queries to database.") },
-                    {DiagnosticIdLC001, new DiagnosticDescriptor(DiagnosticIdLC001, "Unused Local Variable.", "{0} is unused.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Unused Local Variable.") }
+                    {DiagnosticIdLC001, new DiagnosticDescriptor(DiagnosticIdLC001, "Unused Local Variable.", "{0} is unused.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Unused Local Variable.") },
+                    {DiagnosticIdMT001, new DiagnosticDescriptor(DiagnosticIdMT001, "Number of Parameters.", "{0} has too many parameters ({1} parameters).", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Number of Parameters.") },
+                    {DiagnosticIdMT002, new DiagnosticDescriptor(DiagnosticIdMT002, "Deep Nested Blocks.", "{0} has deep nested blocks ({1} levels).", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Deep Nested Blocks.") }
                 };
                 }
                 return _rules;
@@ -43,6 +47,8 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
             context.RegisterSyntaxNodeAction(AnalyzeLinqExpression, SyntaxKind.SimpleLambdaExpression, SyntaxKind.ParenthesizedLambdaExpression/*, SyntaxKind.QueryExpression*/);
             context.RegisterSyntaxNodeAction(AnalizeLoop, SyntaxKind.WhileStatement, SyntaxKind.ForStatement, SyntaxKind.ForEachStatement);
             context.RegisterSyntaxNodeAction(AnalizeLocalVariables, SyntaxKind.MethodDeclaration);
+            context.RegisterSyntaxNodeAction(AnalizeMethodParameters, SyntaxKind.MethodDeclaration);
+            context.RegisterSyntaxNodeAction(AnalizeMethodDeepNestedBlocks, SyntaxKind.MethodDeclaration);
         }
 
         private void AnalyzeLinqExpression(SyntaxNodeAnalysisContext context)
@@ -177,5 +183,59 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
             }
         }
 
+
+        private const int _highNumberOfParemeters = 3;
+        private void AnalizeMethodParameters(SyntaxNodeAnalysisContext context)
+        {
+            var node = context.Node as MethodDeclarationSyntax;
+            if (node == null || node.Body == null)
+            {
+                return;
+            }
+
+            var methodName = node.Identifier;
+            var numberOfParas = node.ChildNodes().Where(x => x is ParameterListSyntax).FirstOrDefault()
+                ?.ChildNodes().Where(x => x is ParameterSyntax).Count();
+
+            if (numberOfParas.HasValue && numberOfParas.Value > _highNumberOfParemeters)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(Rules[DiagnosticIdMT001], methodName.GetLocation(), methodName.ToString(), numberOfParas.Value));
+            }
+        }
+
+        private const int _deepNestedBlocks = 3;
+        private void AnalizeMethodDeepNestedBlocks(SyntaxNodeAnalysisContext context)
+        {
+            var node = context.Node as MethodDeclarationSyntax;
+            if (node == null || node.Body == null)
+            {
+                return;
+            }
+
+            var depthTracker = new List<int>();
+            DrilldownBlocks(node, 0, depthTracker);
+
+            var depth = depthTracker.Any() ? depthTracker.Max() : 0;
+
+            if (depth > _deepNestedBlocks)
+            {
+                var methodName = node.Identifier;
+                context.ReportDiagnostic(Diagnostic.Create(Rules[DiagnosticIdMT002], methodName.GetLocation(), methodName.ToString(), depth));
+            }
+        }
+
+        private void DrilldownBlocks(SyntaxNode node, int depth, List<int> depthTracker)
+        {
+            foreach (var child in node.ChildNodes())
+            {
+                if (child is BlockSyntax)
+                {
+                    depthTracker.Add(depth);
+                    DrilldownBlocks(child, depth + 1, depthTracker);
+                }
+
+                DrilldownBlocks(child, depth, depthTracker);
+            }
+        }
     }
 }
