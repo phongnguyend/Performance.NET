@@ -13,12 +13,15 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class IQuerableAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticIdIQ001 = "IQ001";
-        public const string DiagnosticIdIQ002 = "IQ002";
+        public const string UseContainsMethodInExpressionRule = "IQ001";
+        public const string EvaluateIQueryableInsideLoopRule = "IQ002";
 
-        public const string DiagnosticIdLC001 = "LC001";
-        public const string DiagnosticIdMT001 = "MT001";
-        public const string DiagnosticIdMT002 = "MT002";
+        public const string UnusedLocalVariableRule = "LC001";
+        public const string HighNumberOfParametersRule = "MT001";
+        public const string DeepNestedBlocksRule = "MT002";
+
+        public const string AbuseStringCompareRule = "CC001";
+        public const string ComplexIfConditionRule = "CC002";
 
         private static Dictionary<string, DiagnosticDescriptor> _rules;
         public static Dictionary<string, DiagnosticDescriptor> Rules
@@ -29,11 +32,14 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
                 {
                     _rules = new Dictionary<string, DiagnosticDescriptor>
                 {
-                    {DiagnosticIdIQ001, new DiagnosticDescriptor(DiagnosticIdIQ001, "Expression has 'Contains' method", "Using '{0}' might generate Adhoc queries.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Using 'Contains' cause generating Adhoc queries.") },
-                    {DiagnosticIdIQ002, new DiagnosticDescriptor(DiagnosticIdIQ002, "Evaluate IQueryable Inside a Loop", "Using {0} inside a loop might generate multiple queries to database.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Evaluate IQueryable Inside a Loop might generate multiple queries to database.") },
-                    {DiagnosticIdLC001, new DiagnosticDescriptor(DiagnosticIdLC001, "Unused Local Variable.", "{0} is unused.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Unused Local Variable.") },
-                    {DiagnosticIdMT001, new DiagnosticDescriptor(DiagnosticIdMT001, "Number of Parameters.", "{0} has too many parameters ({1} parameters).", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Number of Parameters.") },
-                    {DiagnosticIdMT002, new DiagnosticDescriptor(DiagnosticIdMT002, "Deep Nested Blocks.", "{0} has deep nested blocks ({1} levels).", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Deep Nested Blocks.") }
+                    {UseContainsMethodInExpressionRule, new DiagnosticDescriptor(UseContainsMethodInExpressionRule, "Expression has 'Contains' method", "Using '{0}' might generate Adhoc queries.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Using 'Contains' cause generating Adhoc queries.") },
+                    {EvaluateIQueryableInsideLoopRule, new DiagnosticDescriptor(EvaluateIQueryableInsideLoopRule, "Evaluate IQueryable Inside a Loop", "Using {0} inside a loop might generate multiple queries to database.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Evaluate IQueryable Inside a Loop might generate multiple queries to database.") },
+                    {UnusedLocalVariableRule, new DiagnosticDescriptor(UnusedLocalVariableRule, "Unused Local Variable.", "{0} is unused.", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Unused Local Variable.") },
+                    {HighNumberOfParametersRule, new DiagnosticDescriptor(HighNumberOfParametersRule, "Number of Parameters.", "{0} has too many parameters ({1} parameters).", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Number of Parameters.") },
+                    {DeepNestedBlocksRule, new DiagnosticDescriptor(DeepNestedBlocksRule, "Deep Nested Blocks.", "{0} has deep nested blocks ({1} levels).", "Optimazation", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Deep Nested Blocks.") },
+
+                    {AbuseStringCompareRule, new DiagnosticDescriptor(AbuseStringCompareRule, "Use string.Equals instead of string.Compare.", "Use string.Equals instead of string.Compare.", "CleanCode", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Use string.Equals instead of string.Compare.") },
+                    {ComplexIfConditionRule, new DiagnosticDescriptor(ComplexIfConditionRule, "Complex If Condition.", "Complex If Condition ({0}).", "CleanCode", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: "Complex If Condition.") }
                 };
                 }
                 return _rules;
@@ -49,6 +55,51 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
             context.RegisterSyntaxNodeAction(AnalizeLocalVariables, SyntaxKind.MethodDeclaration);
             context.RegisterSyntaxNodeAction(AnalizeMethodParameters, SyntaxKind.MethodDeclaration);
             context.RegisterSyntaxNodeAction(AnalizeMethodDeepNestedBlocks, SyntaxKind.MethodDeclaration);
+            context.RegisterSyntaxNodeAction(AnalizeStringCompareUsage, SyntaxKind.EqualsExpression);
+            context.RegisterSyntaxNodeAction(AnalizeComplexIfCondition, SyntaxKind.IfStatement);
+        }
+
+        private void AnalizeComplexIfCondition(SyntaxNodeAnalysisContext context)
+        {
+            var node = context.Node as IfStatementSyntax;
+
+            if(node is null || node.Condition is null)
+            {
+                return;
+            }
+
+            var found = 0;
+            TraverseIfCondition(context, node.Condition, ref found);
+
+            if (found > 2)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(Rules[ComplexIfConditionRule], node.Condition.GetLocation(), found));
+            }
+        }
+
+        private void TraverseIfCondition(SyntaxNodeAnalysisContext context, SyntaxNode node, ref int found)
+        {
+            foreach (var child in node.ChildTokens())
+            {
+                if (child.ValueText == "&&" || child.ValueText == "||")
+                {
+                    found++;
+                }
+            }
+
+            foreach (var child in node.ChildNodes())
+            {
+                TraverseIfCondition(context, child, ref found);
+            }
+        }
+
+        private void AnalizeStringCompareUsage(SyntaxNodeAnalysisContext context)
+        {
+            var node = context.Node as BinaryExpressionSyntax;
+            if (node != null && node.Left.ToString().StartsWith("string.Compare(") && node.OperatorToken.ValueText == "==" && node.Right.ToString() == "0")
+            {
+                context.ReportDiagnostic(Diagnostic.Create(Rules[AbuseStringCompareRule], node.GetLocation(), node.ToString()));
+            }
         }
 
         private void AnalyzeLinqExpression(SyntaxNodeAnalysisContext context)
@@ -96,7 +147,7 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
 
             if (receiverType == "IQueryable" || returnType == "IQueryable" || receiverType == "IOrderedQueryable" || returnType == "IOrderedQueryable")
             {
-                var diagnostic = Diagnostic.Create(Rules[DiagnosticIdIQ001], foundNode.GetLocation(), foundNode.ToString());
+                var diagnostic = Diagnostic.Create(Rules[UseContainsMethodInExpressionRule], foundNode.GetLocation(), foundNode.ToString());
 
                 context.ReportDiagnostic(diagnostic);
             }
@@ -153,7 +204,7 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
 
                     if ((type == "IQueryable" || type == "IOrderedQueryable") && returnType != "IQueryable" && returnType != "IOrderedQueryable")
                     {
-                        context.ReportDiagnostic(Diagnostic.Create(Rules[DiagnosticIdIQ002], child.GetLocation(), child.ToString()));
+                        context.ReportDiagnostic(Diagnostic.Create(Rules[EvaluateIQueryableInsideLoopRule], child.GetLocation(), child.ToString()));
                         return;
                     }
                 }
@@ -178,7 +229,7 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
                 if (symbol is ILocalSymbol)
                 {
                     var local = symbol as ILocalSymbol;
-                    context.ReportDiagnostic(Diagnostic.Create(Rules[DiagnosticIdLC001], local.Locations[0], local.ToString()));
+                    context.ReportDiagnostic(Diagnostic.Create(Rules[UnusedLocalVariableRule], local.Locations[0], local.ToString()));
                 }
             }
         }
@@ -199,7 +250,7 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
 
             if (numberOfParas.HasValue && numberOfParas.Value > _highNumberOfParemeters)
             {
-                context.ReportDiagnostic(Diagnostic.Create(Rules[DiagnosticIdMT001], methodName.GetLocation(), methodName.ToString(), numberOfParas.Value));
+                context.ReportDiagnostic(Diagnostic.Create(Rules[HighNumberOfParametersRule], methodName.GetLocation(), methodName.ToString(), numberOfParas.Value));
             }
         }
 
@@ -220,7 +271,7 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
             if (depth > _deepNestedBlocks)
             {
                 var methodName = node.Identifier;
-                context.ReportDiagnostic(Diagnostic.Create(Rules[DiagnosticIdMT002], methodName.GetLocation(), methodName.ToString(), depth));
+                context.ReportDiagnostic(Diagnostic.Create(Rules[DeepNestedBlocksRule], methodName.GetLocation(), methodName.ToString(), depth));
             }
         }
 

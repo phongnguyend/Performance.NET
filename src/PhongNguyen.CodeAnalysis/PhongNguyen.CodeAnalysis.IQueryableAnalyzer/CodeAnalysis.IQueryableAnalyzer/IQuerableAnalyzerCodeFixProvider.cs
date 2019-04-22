@@ -22,7 +22,7 @@ namespace PhongNguyen.CodeAnalysis.IQueryableAnalyzer
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
-            get { return ImmutableArray.Create(IQuerableAnalyzer.DiagnosticIdIQ001); }
+            get { return ImmutableArray.Create(IQuerableAnalyzer.UseContainsMethodInExpressionRule); }
         }
 
         public sealed override FixAllProvider GetFixAllProvider()
