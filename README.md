@@ -4,6 +4,9 @@
 # Free Tools:
 1. [PerfView](https://github.com/Microsoft/perfview)
 2. [Windows Performance Monitor](https://blogs.technet.microsoft.com/askperf/2014/07/17/windows-performance-monitor-overview/)
+    + [perfmon](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/perfmon)
+    + [logman](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/logman)
+    + [relog](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/relog)
 3. [Windows Resource Monitor](https://www.digitalcitizen.life/how-use-resource-monitor-windows-7)
 4. [Windows Performance Toolkit](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/)
    + [Windows Performance Recorder](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/windows-performance-recorder)
@@ -17,7 +20,6 @@
 9. [Debug Diagnostic Tool (DebugDiag)](https://www.microsoft.com/en-us/download/details.aspx?id=49924)
 10. Libraries:
     + [MiniProfiler](https://miniprofiler.com/)
-    + [Glimpse](https://github.com/Glimpse/Glimpse)
     + [Microsoft.Diagnostics.Runtime (CLRMD)](https://github.com/Microsoft/clrmd)
 
 # Commercial Tools:
