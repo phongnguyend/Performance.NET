@@ -3,11 +3,12 @@
 
 # Free Tools:
 1. [PerfView](https://github.com/Microsoft/perfview)
-2. [Windows Performance Monitor](https://blogs.technet.microsoft.com/askperf/2014/07/17/windows-performance-monitor-overview/)
+2. [Windows Performance Monitor (perfmon.exe)](https://blogs.technet.microsoft.com/askperf/2014/07/17/windows-performance-monitor-overview/)
     + [perfmon](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/perfmon)
     + [logman](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/logman)
     + [relog](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/relog)
-3. [Windows Resource Monitor](https://www.digitalcitizen.life/how-use-resource-monitor-windows-7)
+3. [Windows Resource Monitor (resmon.exe)](https://www.digitalcitizen.life/how-use-resource-monitor-windows-7)
+3. [Performance Analysis of Logs (PAL)](https://github.com/clinthuffman/PAL)
 4. [Windows Performance Toolkit](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/)
    + [Windows Performance Recorder](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/windows-performance-recorder)
    + [Windows Performance Analyzer](https://docs.microsoft.com/en-us/windows-hardware/test/wpt/windows-performance-analyzer)
