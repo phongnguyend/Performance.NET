@@ -1,0 +1,25 @@
+\Processor Information(_Total)\% Processor Time
+\Processor Information(_Total)\% Privileged Time
+\Processor Information(_Total)\% Interrupt Time
+\Processor Information(_Total)\% DPC Time
+\System\Context Switches/sec
+\System\Processor Queue Length
+
+\Memory\Available MBytes
+\Memory\Free System Page Table Entries
+\Memory\Pool Nonpaged Bytes
+\Memory\Pool Paged Bytes
+\Paging File(_Total)\% Usage
+\Process(_Total)\Handle Count
+\Process(_Total)\Thread Count
+\Process(_Total)\Private Bytes
+\Process(_Total)\Working Set
+
+\LogicalDisk(_Total)\% Free Space
+\LogicalDisk(_Total)\Avg. Disk Queue Length
+\LogicalDisk(_Total)\Avg. Disk sec/Read
+\LogicalDisk(_Total)\Avg. Disk sec/Transfer
+\LogicalDisk(_Total)\Avg. Disk sec/Write
+\Process(_Total)\IO Data Operations/sec
+
+\Network Interface(*)\Output Queue Length
