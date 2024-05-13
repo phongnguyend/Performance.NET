@@ -35,3 +35,5 @@
 # Videos:
 - [.Net Memory Allocations and Performance - YouTube](https://www.youtube.com/watch?v=aylUPfOVM90)
 - [.Net Memory Allocations and Performance - Part 2 - YouTube](https://www.youtube.com/watch?v=Ge0tyJqdhxY)
+- [Where are types allocated in .NET and why people get it so wrong - YouTube](https://www.youtube.com/watch?v=jONSIhMST9E)
+- [Understanding .NET C# Heaps (Deep Dive) - YouTube](https://www.youtube.com/watch?v=TnDRzHZbOio)
