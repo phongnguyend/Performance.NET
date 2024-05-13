@@ -31,3 +31,7 @@
 5. [dotMemory](https://www.jetbrains.com/dotmemory/)
 6. [Entity Framework Profiler](https://www.hibernatingrhinos.com/products/efprof)
 7. [Visual Studio Profiling Tools](https://docs.microsoft.com/en-us/visualstudio/profiling/)
+
+# Videos:
+- [.Net Memory Allocations and Performance - YouTube](https://www.youtube.com/watch?v=aylUPfOVM90)
+- [.Net Memory Allocations and Performance - Part 2 - YouTube](https://www.youtube.com/watch?v=Ge0tyJqdhxY)
