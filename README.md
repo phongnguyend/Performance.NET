@@ -45,4 +45,4 @@
 - [Achieving compile-time performance with Reflection in C# - YouTube](https://www.youtube.com/watch?v=er9nD-usM1A)
 - [Optimizing String Performance Easily in C# - YouTube](https://www.youtube.com/watch?v=OjFuBMhJmr4)
 - [Writing Allocation Free Code in C# - Matt Ellis - YouTube](https://www.youtube.com/watch?v=nK54s84xRRs)
-- [Turbocharged: Writing High-performance C# and .NET code, by Steve Gordon - YouTube](https://www.youtube.com/watch?v=g8MYUfplpt8)
+- [Turbocharged: Writing High-Performance C# and .NET Code - Steve Gordon - NDC Oslo 2024 - YouTube](https://www.youtube.com/watch?v=2SXr48OYxbA)
